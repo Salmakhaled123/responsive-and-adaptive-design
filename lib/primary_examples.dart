@@ -182,3 +182,61 @@ class DetailsView extends StatelessWidget {
     );
   }
 }
+
+class ResponsiveText extends StatelessWidget {
+  const ResponsiveText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          'Titlte Text ',
+          style: TextStyle(
+              fontSize: getResponsiveFontSize(
+            context,
+            fontSize: 20,
+          )),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          'when you know that all your effort is in the floor you have a big depression ',
+          style: TextStyle(
+              fontSize: getResponsiveFontSize(
+            context,
+            fontSize: 16,
+          )),
+        ),
+      ]),
+    );
+  }
+
+  // scaleFactor
+  // responsive fontSize=> calculate it after calculation of scale factor
+  // of each platform( mobile- tablet- desktop)
+  // min- max size
+  double getResponsiveFontSize(BuildContext context,
+      {required double fontSize}) {
+    double scaleFactor = getScaleFactor(context);
+    double responsiveFontSize = fontSize * scaleFactor;
+    double lowerLimit = fontSize * 0.8;
+    double upperLimit = fontSize * 1.2;
+    return responsiveFontSize.clamp(lowerLimit, upperLimit);
+  }
+
+  double getScaleFactor(BuildContext context) {
+    double width = MediaQuery.sizeOf(context).width;
+    if (width < 600) {
+      return width / 400;
+    } else if (width < 900) {
+      return width / 700;
+    } else {
+      return width / 1000;
+    }
+  }
+}
